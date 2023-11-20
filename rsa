@@ -1,0 +1,30 @@
+import sys
+
+def rsa_factorize(n):
+    factors = []
+    i = 2
+    while i * i <= n:
+        if n % i == 0:
+            factors.append(i)
+            n //= i
+            break
+        i += 1
+
+    factors.append(n)
+    return factors
+
+def rsa_factorize_file(file_path):
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+
+    for line in lines:
+        number = int(line.strip())
+        factors = rsa_factorize(number)
+        print(f"{number}={'*'.join(map(str, factors))}")
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: python rsa.py <file>")
+        sys.exit(1)
+
+    rsa_factorize_file(sys.argv[1])
